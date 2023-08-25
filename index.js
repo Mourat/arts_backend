@@ -31,6 +31,15 @@ app.get("/arts", (req, res) => {
     })
 })
 
+app.get("/arts/:id", (req, res) => {
+    const artId = req.params.id
+    const q = "SELECT * FROM arts WHERE id = ?"
+    db.query(q, [artId], (err, data) => {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
 app.post("/arts", (req, res) => {
     const q = "INSERT INTO arts (`title`, `desc`, `price`, `cover`) VALUES (?)"
     const values = [
